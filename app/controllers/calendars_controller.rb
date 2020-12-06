@@ -26,17 +26,32 @@ class CalendarsController < ApplicationController
     # 例)　今日が2月1日の場合・・・ Date.today.day => 1日
 
     @week_days = []
+    
+    # Date.today.wday = ['x']
 
     plans = Plan.where(date: @todays_date..@todays_date + 6)
+    
+    # plans = [{id: 1, plan: "tokyouheiku", date: "1210"},{id: 2, plan: "aaa", date:"1209"},{id: 3, plan: "ddd", date:"1210"}  ]
 
     7.times do |x|
       today_plans = []
       plan = plans.map do |plan|
         today_plans.push(plan.plan) if plan.date == @todays_date + x
       end
-      days = {month： (@todays_date + x).month, date： (@todays_date+x).day, plans： today_plans}
+
+      wday_num = Date.today.wday# wdayメソッドを用いて取得した数値
+
+      wdays [ wday_num ]
+
+      if wday_num >= 7#「wday_numが7以上の場合」という条件式
+        wday_num = wday_num -7
+      end
+
+      days = { month: (@todays_date + x).month, date: @todays_date.day + x, plans: today_plans,:wday => wdays[+ x]}
       @week_days.push(days)
     end
-
   end
 end
+
+#wdays(@todays_date + x )
+#wdays[0]→"日"
