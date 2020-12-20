@@ -56,4 +56,4 @@ end
 #wdays(@todays_date + x )
 #wdays[0]→"日"
 
-end
+
